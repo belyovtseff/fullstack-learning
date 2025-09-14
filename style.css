@@ -41,6 +41,11 @@ h2 {
   font-size: 1.5rem;
   color: #1F2937;
   margin-bottom: 0.5rem;
+  position: relative;
+}
+h2::before {
+  content: "➜ ";
+  color: #2563EB;
 }
 h3 {
   font-size: 1.25rem;
@@ -72,16 +77,25 @@ input::placeholder {
   color: #9CA3AF;
 }
 button {
-  background-color: #2563EB;
+  background-image: linear-gradient(to right, #2563EB 50%, #1D4ED8 50%);
+  background-size: 200% 100%;
+  background-position: 0% 0;
   color: #FFFFFF;
   padding: 0.5rem;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-position 0.5s ease;
 }
 button:hover {
-  background-color: #1D4ED8;
+  background-position: 100% 0;
+}
+img.avatar {
+  width: 175px;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: 50% 10%;
 }
 footer {
   background-color: #1F2937;
@@ -106,5 +120,9 @@ footer {
   }
   h3 {
     font-size: 1rem;
+  }
+  img.avatar {
+    width: 80px;
+    height: auto; /* Автоматическая высота для адаптации пропорций */
   }
 }
