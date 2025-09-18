@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Белёвцев Виктор - портфолио</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/portfolio.css">
-    <title>Виктор Белёвцев - Портфолио</title>
+    <link rel="stylesheet" href="/styles/portfolio.css">
 </head>
 <body>
     <header class="header">
-        <h1>Виктор Белёвцев - Портфолио</h1>
+        <h1>Белёвцев Виктор - портфолио</h1>
     </header>
     <main>
         <section id="about" class="about">
@@ -31,10 +31,10 @@
             <h2 class="projects__title">Проекты</h2>
             <div class="projects__project-bio project-bio">
                 <h3 class="project-bio__title">Визитка</h3>
-                <p class="project-bio__descr">Мой первый сайт. Моя личная страница-визитка.</p>
-                <a href="bio.html" class="project-bio__link">Посмотреть</a>
+                <p class="project-bio__descr">Моя личная страница-визитка, созданная в марафоне.</p>
+                <a href="index.html" class="project-bio__link">Посмотреть</a>
                 <a href="https://github.com/belyovtseff/fullstack-learning" class="project-bio__link">GitHub</a>
-                <img src="/images/pics/bio.png" alt="Скриншот визитки" class="project-bio__img">
+                <img src="/images/pics/bio.png" alt="Скриншот визитки" class="project-bio__img" onclick="openPopup('/images/pics/bio.png')">
                 <p class="project-bio__stack">Стек: HTML5, CSS3, Git</p>
             </div>
         </section>
@@ -50,5 +50,25 @@
     <footer class="footer">
         <p class="footer__text">© 2025 Виктор Белёвцев. Все права защищены.</p>
     </footer>
+
+    <!-- Модальное окно для изображения -->
+    <div id="popup" class="popup" onclick="closePopup()">
+        <span class="popup__close">&times;</span>
+        <img id="popup-img" class="popup__image">
+    </div>
+
+    <script>
+        function openPopup(imageSrc) {
+            const popup = document.getElementById('popup');
+            const popupImg = document.getElementById('popup-img');
+            popupImg.src = imageSrc;
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
