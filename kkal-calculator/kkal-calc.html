@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор калорий</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/kkal-calculator/styles/kkal-calc.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Калькулятор калорий</h1>
+    </header>
+    <main class="main">
+        <section class="calculator">
+            <h2 class="calculator__title">Добавь продукт</h2>
+            <form class="calculator__form">
+                <input type="text" class="calculator__input" placeholder="Продукт" required>
+                <input type="number" class="calculator__input" placeholder="Вес (г)" required>
+                <input type="number" class="calculator__input" placeholder="Калорийность (ккал/100г)" required>
+                <button type="submit" class="calculator__button">Добавить</button>
+            </form>
+            <ul class="calculator__list"></ul>
+            <p class="calculator__total">Общая сумма калорий: 0 ккал</p>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__text">© 2025 Виктор Белёвцев</p>
+        <a href="/index.html" class="back-button">Назад</a>
+    </footer>
+
+    <script>
+        const form = document.querySelector('.calculator__form');
+        const list = document.querySelector('.calculator__list');
+        const total = document.querySelector('.calculator__total');
+        let calorieTotal = parseFloat(localStorage.getItem('calorieTotal')) || 0;
+        let items = JSON.parse(localStorage.getItem('calorieItems')) || [];
+
+        // Загрузка сохранённых данных
+        window.onload = () => {
+            total.textContent = `Общая сумма калорий: ${calorieTotal.toFixed(2)} ккал`;
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `${item.name} (${item.weight}г): ${item.calories.toFixed(2)} ккал <button class="calculator__delete">Удалить</button>`;
+                list.appendChild(li);
+            });
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const product = form.querySelectorAll('.calculator__input');
+            const name = product[0].value;
+            const weight = parseInt(product[1].value);
+            const caloriesPer100g = parseInt(product[2].value);
+            if (name && weight && caloriesPer100g) {
+                const calories = (weight / 100) * caloriesPer100g;
+                calorieTotal += calories;
+                const item = { name, weight, calories };
+                items.push(item);
+                const li = document.createElement('li');
+                li.innerHTML = `${name} (${weight}г): ${calories.toFixed(2)} ккал <button class="calculator__delete">Удалить</button>`;
+                li.querySelector('.calculator__delete').addEventListener('click', () => {
+                    calorieTotal -= item.calories;
+                    items = items.filter(i => i !== item);
+                    list.removeChild(li);
+                    total.textContent = `Общая сумма калорий: ${calorieTotal.toFixed(2)} ккал`;
+                    localStorage.setItem('calorieTotal', calorieTotal);
+                    localStorage.setItem('calorieItems', JSON.stringify(items));
+                });
+                list.appendChild(li);
+                total.textContent = `Общая сумма калорий: ${calorieTotal.toFixed(2)} ккал`;
+                localStorage.setItem('calorieTotal', calorieTotal);
+                localStorage.setItem('calorieItems', JSON.stringify(items));
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
